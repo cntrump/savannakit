@@ -14,6 +14,7 @@ import Foundation
 import AppKit
 #else
 import UIKit
+typealias NSTextStorageEditActions = NSTextStorage.EditActions
 #endif
 
 class LineNumberLayoutManager: NSLayoutManager {
@@ -63,9 +64,9 @@ class LineNumberLayoutManager: NSLayoutManager {
 			return paraNumber
 		}
 	}
-	
-	override func processEditing(for textStorage: NSTextStorage, edited editMask: NSTextStorageEditActions, range newCharRange: NSRange, changeInLength delta: Int, invalidatedRange invalidatedCharRange: NSRange) {
-		super.processEditing(for: textStorage, edited: editMask, range: newCharRange, changeInLength: delta, invalidatedRange: invalidatedCharRange)
+
+    override func processEditing(for textStorage: NSTextStorage, edited editMask: NSTextStorageEditActions, range newCharRange: NSRange, changeInLength delta: Int, invalidatedRange invalidatedCharRange: NSRange) {
+    	super.processEditing(for: textStorage, edited: editMask, range: newCharRange, changeInLength: delta, invalidatedRange: invalidatedCharRange)
 		if invalidatedCharRange.location < lastParaLocation {
 			//  When the backing store is edited ahead the cached paragraph location, invalidate the cache and force a complete
 			//  recalculation.  We cannot be much smarter than this because we don't know how many paragraphs have been deleted
@@ -84,7 +85,7 @@ class LineNumberLayoutManager: NSLayoutManager {
 		
 //		let style = DefaultTheme().lineNumbersStyle!
 		
-		let atts: [NSAttributedStringKey: Any] = [:
+        let atts: [NSAttributedString.Key: Any] = [:
 //			.font: style.font,
 //			.foregroundColor : style.textColor
 		]

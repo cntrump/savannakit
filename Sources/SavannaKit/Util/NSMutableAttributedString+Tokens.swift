@@ -16,11 +16,11 @@ import Foundation
 
 public extension NSMutableAttributedString {
 	
-	convenience public init(source: String, tokens: [Token], theme: SyntaxColorTheme) {
+	convenience init(source: String, tokens: [Token], theme: SyntaxColorTheme) {
 		
 		self.init(string: source)
 		
-		var attributes = [NSAttributedStringKey: Any]()
+        var attributes = [NSAttributedString.Key: Any]()
 		
 		let spaceAttrString = NSAttributedString(string: " ", attributes: [.font: theme.font])
 		let spaceWidth = spaceAttrString.size().width
@@ -63,7 +63,7 @@ public extension NSMutableAttributedString {
 				
 				let contentRange = NSRange(location: range.lowerBound + 2, length: range.length - 4)
 				
-				var attr = [NSAttributedStringKey: Any]()
+                var attr = [NSAttributedString.Key: Any]()
 				
 				attr[.editorPlaceholder] = EditorPlaceholderState.inactive
 				

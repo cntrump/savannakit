@@ -11,12 +11,25 @@ import SavannaKit
 
 class ViewController: UIViewController {
 
-	@IBOutlet weak var syntaxTextView: SyntaxTextView!
+	lazy var syntaxTextView: SyntaxTextView = SyntaxTextView()
 	
 	let lexer = MyLexer()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+        navigationController?.navigationBar.barStyle = .black
+        navigationController?.navigationBar.isTranslucent = true
+        navigationItem.title = "SavannaKit"
+
+        view.addSubview(syntaxTextView)
+        syntaxTextView.translatesAutoresizingMaskIntoConstraints = false
+        view.addConstraints([
+            NSLayoutConstraint(item: syntaxTextView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: syntaxTextView, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: syntaxTextView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: syntaxTextView, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1, constant: 0)
+            ])
 
 		syntaxTextView.delegate = self
 		syntaxTextView.theme = MyTheme()
@@ -113,9 +126,9 @@ class MyTheme: SyntaxColorTheme {
 	
 	let backgroundColor = Color(red: 31/255.0, green: 32/255, blue: 41/255, alpha: 1.0)
 	
-	func globalAttributes() -> [NSAttributedStringKey: Any] {
+    func globalAttributes() -> [NSAttributedString.Key: Any] {
 		
-		var attributes = [NSAttributedStringKey: Any]()
+        var attributes = [NSAttributedString.Key: Any]()
 
 		attributes[.font] = Font(name: "Menlo", size: 15)!
 		attributes[.foregroundColor] = UIColor.white
@@ -123,13 +136,13 @@ class MyTheme: SyntaxColorTheme {
 		return attributes
 	}
 	
-	func attributes(for token: Token) -> [NSAttributedStringKey: Any] {
+    func attributes(for token: Token) -> [NSAttributedString.Key: Any] {
 		
 		guard let myToken = token as? MyToken else {
 			return [:]
 		}
 		
-		var attributes = [NSAttributedStringKey: Any]()
+        var attributes = [NSAttributedString.Key: Any]()
 		
 		switch myToken.type {
 		case .longWord:
